@@ -243,18 +243,22 @@ AI-generated code was reviewed and tested manually, including:
 
 ## Deployment
 
-Intended target: [Render](https://render.com).
+Deployed on [Render](https://render.com) using the `render.yaml` Blueprint in
+this repo (service name `jaswanthproductsupport`, so the live URL is
+`https://jaswanthproductsupport.onrender.com`).
 
-1. Push this repository to GitHub.
-2. Create a new Web Service on Render pointing at the repo.
-3. Set the build command to `npm install` and the start command to `npm start`.
-4. Add the environment variables listed above in the Render dashboard,
-   using your production URL for `GOOGLE_CALLBACK_URL`
-   (e.g. `https://your-app.onrender.com/auth/google/callback`).
-5. Add that same production callback URL and origin to the OAuth Client in
-   Google Cloud Console.
-6. Set `NODE_ENV=production` so session cookies are marked `secure`.
+1. In the Render dashboard: **New +** → **Blueprint**, and select this GitHub repo.
+2. Render reads `render.yaml` and proposes the `jaswanthproductsupport` web service.
+3. Fill in the environment variables it prompts for (marked `sync: false` in
+   the blueprint): `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and
+   `GOOGLE_CALLBACK_URL` (`https://jaswanthproductsupport.onrender.com/auth/google/callback`).
+   `NODE_ENV` and `SESSION_SECRET` are already set by the blueprint.
+4. Click **Apply** — Render runs `npm install` then `npm start`.
+5. In Google Cloud Console, add `https://jaswanthproductsupport.onrender.com`
+   as an authorized JavaScript origin and the callback URL above as an
+   authorized redirect URI on the OAuth Client.
 
-> Note: Render's free tier filesystem is ephemeral on redeploys, so the
-> SQLite database will reset when the service redeploys. For persistent data
-> across deploys, attach a Render Disk mounted at the `database/` directory.
+> Note: the free plan's filesystem is ephemeral across redeploys, so the
+> SQLite database resets whenever the service redeploys. Persisting it across
+> deploys requires a paid plan with a Render Disk mounted over `database/`
+> (free-tier services can't attach disks).
