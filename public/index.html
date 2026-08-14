@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Login screen -->
+  <section id="login-screen" class="screen hidden">
+    <div class="login-card">
+      <h1>TaskFlow</h1>
+      <p class="subtitle">Simple Task Management</p>
+      <a href="/auth/google" class="btn btn-google">Continue with Google</a>
+    </div>
+  </section>
+
+  <!-- Dashboard screen -->
+  <section id="dashboard-screen" class="screen hidden">
+    <header class="topbar">
+      <span class="brand">TaskFlow</span>
+      <div class="user-info">
+        <span id="user-name"></span>
+        <a href="/auth/logout" class="btn btn-logout">Logout</a>
+      </div>
+    </header>
+
+    <main class="content">
+      <h2>My Tasks</h2>
+
+      <form id="create-task-form" class="create-task-form">
+        <input
+          type="text"
+          id="task-title-input"
+          placeholder="Enter task title..."
+          autocomplete="off"
+        />
+        <button type="submit" id="add-task-btn">Add Task</button>
+      </form>
+      <p id="form-error" class="form-error hidden"></p>
+
+      <hr />
+
+      <div id="tasks-container">
+        <p id="empty-state" class="empty-state hidden">
+          You don't have any tasks yet.<br />
+          Create your first task above.
+        </p>
+        <ul id="task-list" class="task-list"></ul>
+      </div>
+    </main>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
