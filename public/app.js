@@ -1,6 +1,7 @@
 const loginScreen = document.getElementById('login-screen');
 const dashboardScreen = document.getElementById('dashboard-screen');
 const userNameEl = document.getElementById('user-name');
+const userAvatarEl = document.getElementById('user-avatar');
 
 const createTaskForm = document.getElementById('create-task-form');
 const taskTitleInput = document.getElementById('task-title-input');
@@ -37,6 +38,12 @@ async function init() {
 
     const user = await res.json();
     userNameEl.textContent = user.name;
+    userAvatarEl.textContent = user.name
+      .split(' ')
+      .map((part) => part[0])
+      .slice(0, 2)
+      .join('')
+      .toUpperCase();
     showScreen(dashboardScreen);
     loadTasks();
   } catch (err) {
