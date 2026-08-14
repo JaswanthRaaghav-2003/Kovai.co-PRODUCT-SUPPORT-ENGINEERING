@@ -1,5 +1,6 @@
 require('dotenv').config({ quiet: true });
 
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -14,7 +15,13 @@ const VALID_STATUSES = ['Planned', 'In Progress', 'Complete'];
 // Database setup
 // ---------------------------------------------------------------------------
 
-const db = new Database(path.join(__dirname, 'database', 'taskflow.db'));
+const databaseDirectory = path.join(__dirname, 'database');
+
+if (!fs.existsSync(databaseDirectory)) {
+  fs.mkdirSync(databaseDirectory, { recursive: true });
+}
+
+const db = new Database(path.join(databaseDirectory, 'taskflow.db'));
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
